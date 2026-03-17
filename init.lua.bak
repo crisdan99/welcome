@@ -61,6 +61,10 @@ minetest.register_on_joinplayer(function(player)
 
           -- 🔗 BOTÓN DISCORD
          .. "button_url[12.6,0.2;3.8,0.9;discord_link;Join Discord;https://discord.gg/C8Ev9td5k]"
+         -- 🔗 BOTÓN PÁGINA WEB
+         .. "button_url[12.6,1.2;3.8,0.9;web_link;Visit Website;https://just-craft.servehttp.com/]"
+         ---boton Foro 
+         .. "button_url[12.6,2.2;3.8,0.9;web_link;Visit Forum;https://forum.luanti.org/viewtopic.php?t=32339/]"
          -- Botón play
          .. "button_exit[0.5,8.5;3,1;close;Let's Play!]"
         --------------------------------------------------
@@ -156,6 +160,9 @@ minetest.register_on_joinplayer(function(player)
         --------------------------------------------------
         formspec = formspec ..
             "label[0.0,9.2;For a complete list of available commands, type /help into chat.]"
+            
+         formspec = formspec ..
+             "labe[0.0,7.1;ejekrkr.]"
 
         --------------------------------------------------
         -- MOSTRAR
@@ -177,3 +184,6 @@ dofile(ac_file)
 --------------------------------------------------
 local if_file = minetest.get_modpath("welcome") .. "/if.lua"
 dofile(if_file)
+
+dofile(minetest.get_modpath("welcome") .. "/help.lua")
+dofile(minetest.get_modpath("welcome") .. "/a.lua")
