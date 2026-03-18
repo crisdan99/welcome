@@ -433,16 +433,6 @@ minetest.register_on_joinplayer(function(player)
 	minetest.chat_send_player(name, message)
 
 	-- lo vuelve a mandar cada 20s (3 veces total = 1 minuto aprox)
-	minetest.after(20, function()
-		minetest.chat_send_player(name, message)
-	end)
-
-	minetest.after(40, function()
-		minetest.chat_send_player(name, message)
-	end)
-
-	minetest.after(60, function()
-		minetest.chat_send_player(name, message)
-	end)
+	
 
 end)
