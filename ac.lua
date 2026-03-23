@@ -456,65 +456,73 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
     ----------------------------------------------------
     -- PANEL RANK TOPS
     ----------------------------------------------------
-    if fields.ranktops then
+       if fields.ranktops then
 
-        local groups = build_rank_tops()
+    local groups = build_rank_tops()
 
-        local fs =
-            "formspec_version[4]"
-            .. "size[14,10]"
-            .. default.gui_bg
-            .. default.gui_bg_img
-            .. "label[0.3,0.3;Rank Tops Panel]"
-            .. "scroll_container[0.3,0.8;13.4,8.8;scroll;vertical]"
+    local fs =
+        "formspec_version[4]"
+        .. "size[14,10]"
+        .. default.gui_bg
+        .. default.gui_bg_img
+        .. "label[0.3,0.3;Rank Tops Panel]"
 
-        local y = 0
+    local y = 0
 
-        local function draw(title,list)
+    fs = fs ..
+        "scroll_container[0.3,0.8;12.8,8.8;scroll;vertical]"
 
-            if #list == 0 then return end
+    local function draw(title,list)
+
+        if #list == 0 then return end
+
+        fs = fs ..
+            "label[0.2,"..y..";--- "
+            .. title .. " ---]"
+
+        y = y + 0.5
+
+        for i=1, #list do  -- 👈 sacamos el límite de 10
+
+            local name = list[i][1]
+            local data = list[i][2]
 
             fs = fs ..
-                "label[0.2,"..y..";--- "
-                .. title .. " ---]"
+                "label[0.5,"..y..";"
+                .. i .. ". "
+                .. name
+                .. " - "
+                .. math.floor(data.total_hours)
+                .. "h]"
 
             y = y + 0.5
-
-            for i=1, math.min(10,#list) do
-
-                local name = list[i][1]
-                local data = list[i][2]
-
-                fs = fs ..
-                    "label[0.5,"..y..";"
-                    .. i .. ". "
-                    .. name
-                    .. " - "
-                    .. math.floor(
-                        data.total_hours
-                    ) .. "h]"
-
-                y = y + 0.5
-            end
-
-            y = y + 0.3
         end
 
-        draw("OWNER", groups.owner)
-        draw("MODERATOR", groups.moderator)
-        draw("STAFF", groups.staff)
-        draw("GUARDIAN", groups.guardian)
-        draw("BUILDER", groups.builder)
-        draw("PLAYER", groups.player)
-
-        fs = fs .. "scroll_container_end[]"
-
-        minetest.show_formspec(
-            player:get_player_name(),
-            "ac:ranktops",
-            fs
-        )
+        y = y + 0.3
     end
+
+    draw("OWNER", groups.owner)
+    draw("MODERATOR", groups.moderator)
+    draw("STAFF", groups.staff)
+    draw("GUARDIAN", groups.guardian)
+    draw("BUILDER", groups.builder)
+    draw("PLAYER", groups.player)
+
+    fs = fs .. "scroll_container_end[]"
+
+    -- ✅ AHORA sí usamos la altura real
+    local content_height = y
+
+    fs = fs ..
+        "scrollbar[13.2,0.8;0.5,8.8;vertical;scroll;"
+        .. content_height .. "]"
+
+    minetest.show_formspec(
+        player:get_player_name(),
+        "ac:ranktops",
+        fs
+    )
+end
 
     ----------------------------------------------------
     -- PANEL GUARDIAN PROGRESS
