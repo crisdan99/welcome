@@ -156,7 +156,7 @@ func = function(name, param)
 "35) Do NOT post +18 or inappropriate content.\n" ..
 "36) Romantic or inappropriate roleplay is forbidden.\n\n" ..
 
-"You have 120 seconds to accept.\n" ..  
+"You have 190 seconds to accept.\n" ..  
 	"Closing this window = 2 minute penalty."  
 
 	local formspec =  
